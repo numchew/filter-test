@@ -1,35 +1,32 @@
-<html lang=”en”>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="x-ua-compatible" content="ie=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html>
 
-		<!-- Name of the app -->
-		<title>Camera App</title>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<!-- Link to main style sheet -->
-		<link rel="stylesheet" href="style.css"> 
-	</head>
-	<body>
+	<title>Nescafe' Camera App</title>
+	<link rel="stylesheet" href="style.css">
+</head>
 
-		<!-- Camera -->
-		<main id="camera">
+<body>
+	<div id="btn--control">
+		<button id="btn" onclick="changeSet(0)">Cheers with me</button>
+		<button id="btn" onclick="changeSet(1)">Toast together</button>
+		<button id="btn" onclick="changeSet(2)">Lean on me</button>
+		<button id="btn" onclick="changeSet(3)">Coffeselfie</button>
+	</div>
+	<div style="background-color:black;">
+		<canvas id="canvasElement" width="960" height="1280"></canvas>
+		<video id="videoElement" width="960" height="1280" autoplay style="opacity: 0;"></video>
+	</div>
+	<img src="//:0" alt="" id="previewElement" hidden>
+	<button id="camera--trigger" onclick="capture()">Take a picture</button>
 
-		    <!-- Camera sensor -->
-		    <canvas id="camera--sensor"></canvas>
-		    
-		    <!-- Camera view -->
-		    <video id="camera--view" autoplay playsinline></video>
-		    
-		    <!-- Camera output -->
-		    <img src="//:0" alt="" id="camera--output">
+	<audio id="soundEffect"></audio>
+	<script src="dataImg.js"></script>
+	<script src="app.js"></script>
+</body>
 
-		    <!-- Camera trigger -->
-		    <button id="camera--trigger">Take a picture</button>
-
-		</main>
-
-		<!-- Reference to your JavaScript file -->
-		<script src="app.js"></script> 
-	</body>
 </html>

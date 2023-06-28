@@ -1,32 +1,39 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="application-name" content="Camera app">
+	<meta name="apple-mobile-web-app-title" content="Camera app">
 
-	<title>Nescafe' Camera App</title>
-	<link rel="stylesheet" href="style.css">
+	<!-- Name of the app -->
+	<title>Camera App</title>
+
+	<!-- Link to main style sheet -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
 </head>
 
 <body>
-	<div id="btn--control">
-		<button id="btn" onclick="changeSet(0)">Cheers with me</button>
-		<button id="btn" onclick="changeSet(1)">Toast together</button>
-		<button id="btn" onclick="changeSet(2)">Lean on me</button>
-		<button id="btn" onclick="changeSet(3)">Coffeselfie</button>
-	</div>
-	<div style="background-color:black;">
-		<canvas id="canvasElement" width="960" height="1280"></canvas>
-		<video id="videoElement" width="960" height="1280" autoplay style="opacity: 0;"></video>
-	</div>
-	<img src="//:0" alt="" id="previewElement" hidden>
-	<button id="camera--trigger" onclick="capture()">Take a picture</button>
+	<main id="camera">
+		<video id="camera--view" muted autoplay playsinline> </video>
+		<canvas id="camera--sensor"></canvas>
+		<!-- <img src="//:0" alt="" id="camera--filter">
+		<img id="Sticker" src="assets/Shewsheep.png" alt=""></img> -->
+		<button id="camera--trigger">Take a picture</button>
+	</main>
 
-	<audio id="soundEffect"></audio>
-	<script src="dataImg.js"></script>
-	<script src="app.js"></script>
+	<canvas id="camera--output">
+		<!--<img id=" Sticker2" src="assets/Shewsheep.png" alt=""></img>-->
+	</canvas>
+
+	<!-- <img id="camera--icon" src="assets/camera_icons.png" alt=""></img> -->
+
+	<script src="js/app.js"></script>
 </body>
 
 </html>

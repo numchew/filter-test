@@ -1,0 +1,82 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/*#camera {
+     visibility: hidden;
+} */
+
+#camera,
+#camera--sensor,
+#camera--view,
+#cameraOutput {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* #output {
+    pointer-events: none;
+} */
+#camera--output {
+    position: absolute;
+
+}
+
+#camera--view
+
+/* ,
+#camera--sensor,
+#camera--output */
+    {
+    transform: scaleX(-1);
+    filter: FlipH;
+}
+
+#camera--trigger {
+    width: 200px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    position: fixed;
+    bottom: 30px;
+    left: calc(50% - 100px);
+}
+
+#camera--icon {
+    width: 50%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+#Sticker {
+    width: 240px;
+    position: fixed;
+    top: 30px;
+    left: calc(50% - 240px);
+}
+
+.taken {
+    height: 100px !important;
+    width: 100px !important;
+    transition: all 0.5s ease-in;
+    border: solid 3px white;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+}

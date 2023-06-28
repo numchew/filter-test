@@ -20,14 +20,29 @@
 
 <body>
 	<main id="camera">
-		<video id="camera--view" muted autoplay playsinline> </video>
-		<canvas id="camera--sensor"></canvas>
-		<!-- <img src="//:0" alt="" id="camera--filter">
-		<img id="Sticker" src="assets/Shewsheep.png" alt=""></img> -->
-		<button id="camera--trigger">Take a picture</button>
+		<div id="camera--frame">
+			<video id="camera--view" muted autoplay playsinline> </video>
+			<canvas id="camera--output"></canvas>
+			<!-- <img src="//:0" alt="" id="camera--filter"> -->
+			<div class="frame-container">
+				<div class="frame-bg"></div>
+				<!-- <img src="assets/ui/UI_Nes_frame.png" alt=""></img> -->
+				<div class="frame-bg"></div>
+			</div>
+		</div>
+		<div class="wrapper">
+			<img id="capture-btn" src="assets/ui/UI_Nes_botton01_a.png" alt="Capture" style="cursor: pointer;">
+			<img id="capture-btn" src="assets/ui/UI_Nes_botton02_a.png" alt="Capture" style="cursor: pointer;">
+			<img id="capture-btn" src="assets/ui/UI_Nes_botton_shutter.png" alt="Capture" style="cursor: pointer;">
+			<img id="capture-btn" src="assets/ui/UI_Nes_botton04_a.png" alt="Capture" style="cursor: pointer;">
+			<img id="capture-btn" src="assets/ui/UI_Nes_botton05_a.png" alt="Capture" style="cursor: pointer;">
+		</div>
+
+
+		<!-- <button id="camera--trigger">Take a picture</button> -->
 	</main>
 
-	<canvas id="camera--output">
+	<canvas id="camera--output2">
 		<!--<img id=" Sticker2" src="assets/Shewsheep.png" alt=""></img>-->
 	</canvas>
 

@@ -3,7 +3,7 @@ var constraints = { video: { facingMode: "user" }, audio: false };
 var track = null;
 
 // Define constants
-const cameraView = document.querySelector("#camera--view"),
+const video = document.querySelector("#camera--view"),
     cameraSensor = document.querySelector("#camera--sensor"),
     cameraTrigger = document.querySelector("#camera--trigger"),
     cameraOutput = document.querySelector("#camera--output")
@@ -22,31 +22,33 @@ function init() {
     width = window.innerWidth;
     height = window.innerHeight;
 
+
     /* cameraIcon.style.visibility = "hidden";
     camera.style.visibility = "visible"; */
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (stream) {
             track = stream.getTracks()[0];
-            cameraView.srcObject = stream;
-            cameraView.addEventListener('play', function () {
-                requestAnimationFrame(drawVideoFrame);
-            });
+            video.srcObject = stream;
         })
         .catch(function (error) {
             console.error("Oops. Something is broken.", error);
         });
 
-
+    video.addEventListener('play', function () {
+        cameraOutput.width = video.videoWidth;
+        cameraOutput.height = video.videoHeight;
+        drawVideoFrame();
+    });
 
     function drawVideoFrame() {
-        //filter();
-        drawFilter();
-        //requestAnimationFrame(drawVideoFrame);
-    }
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, 0, 0, -cameraOutput.width, cameraOutput.height);
+        ctx.restore();
 
-    function drawFilter() {
-        ctx.drawImage(cameraView, 0, 0);
+
+        requestAnimationFrame(drawVideoFrame);
     }
 
 

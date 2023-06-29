@@ -37,20 +37,13 @@ function init() {
 
     logoImg = new Image();
     logoImg.src = './assets/ui/ngold_logo.png'
-    /* loadImage('./assets/ui/ngold_logo.png')
-        .then((logo) => {
-            logoImg = logo;
-        })
-        .catch((error) => {
-            console.error(error);
-        }); */
 
     toggleCamera();
 
     video.addEventListener('play', function () {
         cameraOutput.width = video.videoWidth;
         cameraOutput.height = video.videoHeight;
-        drawVideoFrame();
+        requestAnimationFrame(drawVideoFrame);
     });
 }
 
@@ -74,23 +67,12 @@ function drawVideoFrame() {
     if (charPath == "") {
         drawImageSmoothly(logoImg, null);
     } else {
-        /* loadImage(charPath)
-            .then((img) => {
-                drawImageSmoothly(logoImg, img);
-            })
-            .catch((error) => {
-                console.error(error);
-            }); */
-
         const img = new Image();
         img.src = charPath;
         img.onload = function () {
             drawImageSmoothly(logoImg, img);
         }
-
     }
-
-
     requestAnimationFrame(drawVideoFrame);
 }
 
@@ -123,32 +105,14 @@ function drawImageSmoothly(logo, img) {
         var imgWidth = img.naturalWidth;
         var imgHeight = img.naturalHeight;
         const aspectRatioImg = imgWidth / imgHeight;
-        const fixedHeight = 500;
+        const fixedHeight = 550;
         const fixedWidth = fixedHeight * aspectRatioImg;
         const x = cameraOutput.width - fixedWidth;
         const y = cameraOutput.height - fixedHeight;
-
-        console.log(x, y);
-        // ctx.drawImage(img, imgWidth / 4 - 50, 0, imgWidth / 4, imgHeight / 4);
-        ctx.drawImage(img, x - 120, y, fixedWidth, fixedHeight /* */);
-
-
-        /*  
-        var imgWidth = img.naturalWidth;
-        var imgHeight = img.naturalHeight;
-         ctx.drawImage(img, imgWidth / 4 - 50, 0, imgWidth / 4, imgHeight / 4); */
+        ctx.drawImage(img, x, y, fixedWidth, fixedHeight);
     }
 }
 
-
-function loadImage(url) {
-    return new Promise((resolve, reject) => {
-        const image = new Image();
-        image.onload = () => resolve(image);
-        image.onerror = () => reject(new Error(`Failed to load image: ${url}`));
-        image.src = url;
-    });
-}
 //////////////////////////////////////////////////
 function capture() {
     preview.src = cameraOutput.toDataURL("image/png");
@@ -207,15 +171,15 @@ const btn4 = document.getElementById('btn4');
 btn1.addEventListener('click', () => {
     btn1.src = './assets/ui/UI_Nes_botton01_b.png';
     btn2.src = './assets/ui/UI_Nes_botton02_a.png';
-    btn3.src = '../assets/ui/UI_Nes_botton03_a.png';
-    btn4.src = '../assets/ui/UI_Nes_botton04_a.png';
+    btn3.src = './assets/ui/UI_Nes_botton03_a.png';
+    btn4.src = './assets/ui/UI_Nes_botton04_a.png';
     changeSet(0);
 });
 btn2.addEventListener('click', () => {
     btn1.src = './assets/ui/UI_Nes_botton01_a.png';
     btn2.src = './assets/ui/UI_Nes_botton02_b.png';
-    btn3.src = '../assets/ui/UI_Nes_botton03_a.png';
-    btn4.src = '../assets/ui/UI_Nes_botton04_a.png';
+    btn3.src = './assets/ui/UI_Nes_botton03_a.png';
+    btn4.src = './assets/ui/UI_Nes_botton04_a.png';
     changeSet(1);
 });
 btn3.addEventListener('click', () => {

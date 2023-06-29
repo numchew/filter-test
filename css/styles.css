@@ -61,7 +61,6 @@ body {
 
 .btn--control {
     display: flex;
-    bottom: 10;
     height: 150;
     background-image: url('../assets/ui/UI_Nes_frame_b.png');
     background-repeat: no-repeat;
@@ -69,6 +68,7 @@ body {
     background-size: cover;
     margin: 0;
     padding: 0;
+    align-items: center;
 }
 
 .flex,

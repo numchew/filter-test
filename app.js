@@ -1,6 +1,6 @@
 // Set constraints for the video stream
 let currentFacingMode = 'user';
-var constraints = { video: { facingMode: currentFacingMode }, audio: false };
+//var constraints = { video: { facingMode: currentFacingMode }, audio: false };
 var track = null;
 
 // Define constants
@@ -21,17 +21,29 @@ var charPath = '';
 
 var logoImg;
 
+function handleVideo() {
+    currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+    const constraints = {
+        video: {
+            facingMode: currentFacingMode
+        }, audio: false
+    }
+    return constraints
+};
+
 function init() {
     width = window.innerWidth;
     height = window.innerHeight;
 
-    loadImage('./assets/ui/ngold_logo.png')
+    logoImg = new Image();
+    logoImg.src = './assets/ui/ngold_logo.png'
+    /* loadImage('./assets/ui/ngold_logo.png')
         .then((logo) => {
             logoImg = logo;
         })
         .catch((error) => {
             console.error(error);
-        });
+        }); */
 
     toggleCamera();
 
@@ -44,12 +56,13 @@ function init() {
 
 ///// switch camera /////
 function toggleCamera() {
+    var constraints = handleVideo();
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (stream) {
             //track = stream.getTracks()[0];
             video.srcObject = stream;
-            currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+            //currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
         })
         .catch(function (error) {
             console.error("Oops. Something is broken.", error);
@@ -61,13 +74,20 @@ function drawVideoFrame() {
     if (charPath == "") {
         drawImageSmoothly(logoImg, null);
     } else {
-        loadImage(charPath)
+        /* loadImage(charPath)
             .then((img) => {
                 drawImageSmoothly(logoImg, img);
             })
             .catch((error) => {
                 console.error(error);
-            });
+            }); */
+
+        const img = new Image();
+        img.src = charPath;
+        img.onload = function () {
+            drawImageSmoothly(logoImg, img);
+        }
+
     }
 
 
@@ -102,7 +122,21 @@ function drawImageSmoothly(logo, img) {
     if (img) {
         var imgWidth = img.naturalWidth;
         var imgHeight = img.naturalHeight;
-        ctx.drawImage(img, imgWidth / 4 - 50, 0, imgWidth / 4, imgHeight / 4);
+        const aspectRatioImg = imgWidth / imgHeight;
+        const fixedHeight = 500;
+        const fixedWidth = fixedHeight * aspectRatioImg;
+        const x = cameraOutput.width - fixedWidth;
+        const y = cameraOutput.height - fixedHeight;
+
+        console.log(x, y);
+        // ctx.drawImage(img, imgWidth / 4 - 50, 0, imgWidth / 4, imgHeight / 4);
+        ctx.drawImage(img, x - 120, y, fixedWidth, fixedHeight /* */);
+
+
+        /*  
+        var imgWidth = img.naturalWidth;
+        var imgHeight = img.naturalHeight;
+         ctx.drawImage(img, imgWidth / 4 - 50, 0, imgWidth / 4, imgHeight / 4); */
     }
 }
 
@@ -171,31 +205,31 @@ const btn3 = document.getElementById('btn3');
 const btn4 = document.getElementById('btn4');
 
 btn1.addEventListener('click', () => {
-    btn1.src = '../assets/ui/UI_Nes_botton01_b.png';
-    btn2.src = '../assets/ui/UI_Nes_botton02_a.png';
+    btn1.src = './assets/ui/UI_Nes_botton01_b.png';
+    btn2.src = './assets/ui/UI_Nes_botton02_a.png';
     btn3.src = '../assets/ui/UI_Nes_botton03_a.png';
     btn4.src = '../assets/ui/UI_Nes_botton04_a.png';
     changeSet(0);
 });
 btn2.addEventListener('click', () => {
-    btn1.src = '../assets/ui/UI_Nes_botton01_a.png';
-    btn2.src = '../assets/ui/UI_Nes_botton02_b.png';
+    btn1.src = './assets/ui/UI_Nes_botton01_a.png';
+    btn2.src = './assets/ui/UI_Nes_botton02_b.png';
     btn3.src = '../assets/ui/UI_Nes_botton03_a.png';
     btn4.src = '../assets/ui/UI_Nes_botton04_a.png';
     changeSet(1);
 });
 btn3.addEventListener('click', () => {
-    btn1.src = '../assets/ui/UI_Nes_botton01_a.png';
-    btn2.src = '../assets/ui/UI_Nes_botton02_a.png';
-    btn3.src = '../assets/ui/UI_Nes_botton03_b.png';
-    btn4.src = '../assets/ui/UI_Nes_botton04_a.png';
+    btn1.src = './assets/ui/UI_Nes_botton01_a.png';
+    btn2.src = './assets/ui/UI_Nes_botton02_a.png';
+    btn3.src = './assets/ui/UI_Nes_botton03_b.png';
+    btn4.src = './assets/ui/UI_Nes_botton04_a.png';
     changeSet(2);
 });
 btn4.addEventListener('click', () => {
-    btn1.src = '../assets/ui/UI_Nes_botton01_a.png';
-    btn2.src = '../assets/ui/UI_Nes_botton02_a.png';
-    btn3.src = '../assets/ui/UI_Nes_botton03_a.png';
-    btn4.src = '../assets/ui/UI_Nes_botton04_b.png';
+    btn1.src = './assets/ui/UI_Nes_botton01_a.png';
+    btn2.src = './assets/ui/UI_Nes_botton02_a.png';
+    btn3.src = './assets/ui/UI_Nes_botton03_a.png';
+    btn4.src = './assets/ui/UI_Nes_botton04_b.png';
     changeSet(3);
 });
 //////////////////////////////////////////////////

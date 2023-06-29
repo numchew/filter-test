@@ -1,0 +1,109 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#camera,
+#camera--view,
+#camera--output {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+#camera--view {
+    position: absolute;
+    z-index: 10;
+}
+
+#camera--output {
+    top: 10;
+}
+
+.preview {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: flex;
+}
+
+.container {
+    background-color: #d8b684;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-top: 10;
+}
+
+#camera--output {
+    width: 95%;
+    height: 80%;
+    border-radius: 10px;
+    align-self: center;
+}
+
+.btn--rotate {
+    top: 15;
+    left: 20;
+    position: absolute;
+    align-self: center;
+}
+
+.btn--rotate img {
+    width: 40;
+    height: 40;
+}
+
+.btn--control {
+    display: flex;
+    bottom: 10;
+    height: 150;
+    background-image: url('../assets/ui/UI_Nes_frame_b.png');
+    background-repeat: no-repeat;
+    /*background-attachment: fixed;*/
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.flex,
+.btn {
+    flex: 1;
+}
+
+.btn img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    overflow: hidden;
+}
+
+.taken {
+    height: 100px !important;
+    width: 100px !important;
+    transition: all 0.5s ease-in;
+    border: solid 2px white;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    top: 20px;
+    right: 20px;
+    visibility: visible;
+}
+
+.fadeout {
+    transition: all 0.25s ease-in;
+    right: -100px;
+    visibility: hidden;
+}
+
+#previewElement {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: 30;
+}

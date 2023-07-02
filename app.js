@@ -15,6 +15,7 @@ var width, height;
 var stage, container;
 
 var cSetIndex = 0;
+var imgElement;
 var imgIndex = 0;
 var intervalId;
 var charPath = '';
@@ -117,7 +118,7 @@ function drawImageSmoothly(logo, img) {
         var imgHeight = img.naturalHeight;
         const aspectRatioImg = imgWidth / imgHeight;
         //const aspectRatioImg = imgHeight / imgWidth;
-        const fixedHeight = 640;
+        const fixedHeight = 800;
         const fixedWidth = fixedHeight * aspectRatioImg;
 
         const x = cameraOutput.width - fixedWidth;
@@ -156,23 +157,21 @@ function fadeout() {
 //////////////////////////////////////////////////
 ///// png sequence /////
 function changeSet(id) {
+    clearInterval(intervalId);
     cSetIndex = id;
     imgIndex = 0;
-    clearInterval(intervalId);
-    intervalId = setInterval(updateImg, 40);
-
+    imgElement = imgSets[cSetIndex].images;
     audioElement.src = imgSets[cSetIndex].audio;
     audioElement.play();
+    intervalId = setInterval(updateImg, 40);
 }
 
 function updateImg() {
-    var currentSet = imgSets[cSetIndex];
-    if (imgIndex >= currentSet.images.length) {
-        imgIndex = 0;
+    if (imgIndex >= imgElement.length) {
         clearInterval(intervalId);
         return;
     }
-    charPath = currentSet.images[imgIndex++];
+    charPath = imgElement[imgIndex++];
 }
 
 //////////////////////////////////////////////////

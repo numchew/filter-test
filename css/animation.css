@@ -1,0 +1,36 @@
+.flip-animation {
+    animation-name: flip;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes flip {
+    0% {
+        transform: scaleX(1);
+    }
+
+    50% {
+        transform: scaleX(0);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+.taken {
+    height: 100px !important;
+    width: 100px !important;
+    transition: all 0.5s ease-in;
+    border: solid 2px white;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    top: 20px;
+    right: 20px;
+    visibility: visible;
+}
+
+.fadeout {
+    transition: all 0.25s ease-in;
+    right: -100px;
+    visibility: hidden;
+}

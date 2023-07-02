@@ -30,6 +30,7 @@ body {
     width: 100%;
     object-fit: cover;
     display: flex;
+    right: 0;
 }
 
 .container {
@@ -41,7 +42,7 @@ body {
 }
 
 #camera--output {
-    width: 95%;
+    width: 96%;
     height: 80%;
     border-radius: 10px;
     align-self: center;
@@ -81,23 +82,6 @@ body {
     height: 90%;
     object-fit: contain;
     overflow: hidden;
-}
-
-.taken {
-    height: 100px !important;
-    width: 100px !important;
-    transition: all 0.5s ease-in;
-    border: solid 2px white;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
-    top: 20px;
-    right: 20px;
-    visibility: visible;
-}
-
-.fadeout {
-    transition: all 0.25s ease-in;
-    right: -100px;
-    visibility: hidden;
 }
 
 #previewElement {

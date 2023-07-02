@@ -20,6 +20,7 @@ var intervalId;
 var charPath = '';
 
 var logoImg;
+var isOpening = false;
 
 function handleVideo() {
     currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
@@ -35,6 +36,7 @@ function init() {
     width = window.innerWidth;
     height = window.innerHeight;
 
+    console.log(cameraOutput.width, width, window.outerWidth);
     logoImg = new Image();
     logoImg.src = './assets/ui/ngold_logo.png'
 
@@ -45,6 +47,7 @@ function init() {
         cameraOutput.height = video.videoHeight;
         requestAnimationFrame(drawVideoFrame);
     });
+
 }
 
 ///// switch camera /////
@@ -55,7 +58,13 @@ function toggleCamera() {
         .then(function (stream) {
             //track = stream.getTracks()[0];
             video.srcObject = stream;
-            //currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+            if (isOpening) {
+                cameraOutput.classList.add('flip-animation');
+                setTimeout(() => {
+                    cameraOutput.classList.remove('flip-animation');
+                }, 500);
+            }
+            isOpening = true;
         })
         .catch(function (error) {
             console.error("Oops. Something is broken.", error);
@@ -68,6 +77,8 @@ function drawVideoFrame() {
         drawImageSmoothly(logoImg, null);
     } else {
         const img = new Image();
+        //charPath = './assets/1.gif';
+        img.classList.add("right");
         img.src = charPath;
         img.onload = function () {
             drawImageSmoothly(logoImg, img);
@@ -105,8 +116,10 @@ function drawImageSmoothly(logo, img) {
         var imgWidth = img.naturalWidth;
         var imgHeight = img.naturalHeight;
         const aspectRatioImg = imgWidth / imgHeight;
-        const fixedHeight = 550;
+        //const aspectRatioImg = imgHeight / imgWidth;
+        const fixedHeight = 640;
         const fixedWidth = fixedHeight * aspectRatioImg;
+
         const x = cameraOutput.width - fixedWidth;
         const y = cameraOutput.height - fixedHeight;
         ctx.drawImage(img, x, y, fixedWidth, fixedHeight);

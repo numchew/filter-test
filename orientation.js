@@ -6,7 +6,7 @@ if (myScreenOrientation && myScreenOrientation.lock) {
             console.log('Screen orientation locked successfully.');
         })
         .catch((error) => {
-            console.error('Failed to lock screen orientation:', error);
+            console.log('Failed to lock screen orientation:', error);
         });
 } else {
     console.warn('Screen Orientation API is not supported in this browser.');

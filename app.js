@@ -16,12 +16,41 @@ var stage, container;
 
 var cSetIndex = 0;
 var imgElement;
-var imgIndex = 0;
+var imgIndex = -1;
 var intervalId;
 var charPath = '';
 
 var logoImg;
 var isOpening = false;
+
+var images_arr = [new Array(), new Array(), new Array(), new Array()];
+var img_curr;
+const numframes = 125
+const frameRate = 25;
+
+
+preloadImages(null, images_arr[0], 'assets/img1/img (');
+preloadImages(null, images_arr[1], 'assets/img2/img (');
+preloadImages(null, images_arr[2], 'assets/img3/img (');
+preloadImages(null, images_arr[3], 'assets/img4/img (');
+function preloadImages(callback, arr, prefix) {
+    let loadedImages = 0;
+    function loadImage(index) {
+        const image = new Image();
+        image.src = prefix + index + ').png';
+        image.onload = function () {
+            loadedImages++;
+            if (loadedImages === numframes && callback) {
+                callback();
+            }
+        };
+        arr[index - 1] = image;
+    }
+
+    for (let i = 1; i <= numframes; i++) {
+        loadImage(i);
+    }
+}
 
 function handleVideo() {
     currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
@@ -37,7 +66,6 @@ function init() {
     width = window.innerWidth;
     height = window.innerHeight;
 
-    console.log(cameraOutput.width, width, window.outerWidth);
     logoImg = new Image();
     logoImg.src = './assets/ui/ngold_logo.png'
 
@@ -74,18 +102,34 @@ function toggleCamera() {
 
 ///// draw frame /////
 function drawVideoFrame() {
-    if (charPath == "") {
+    if (imgIndex < 0/* charPath == "" */) {
         drawImageSmoothly(logoImg, null);
     } else {
-        const img = new Image();
-        //charPath = './assets/1.gif';
-        img.classList.add("right");
+        /* const img = new Image();
         img.src = charPath;
         img.onload = function () {
             drawImageSmoothly(logoImg, img);
+        } */
+
+
+        /* preloadImages(function () {
+            
+        }); */
+
+        img_curr = images_arr[cSetIndex][imgIndex];
+
+        if (imgIndex >= numframes - 1) {
+            imgIndex = numframes - 1;
+        } else {
+            imgIndex++;
         }
+
+        drawImageSmoothly(logoImg, img_curr);
+        //drawImageSmoothly(logoImg, images_1);
     }
-    requestAnimationFrame(drawVideoFrame);
+    //requestAnimationFrame(drawVideoFrame);
+
+    setTimeout(() => drawVideoFrame(), 40);
 }
 
 function drawImageSmoothly(logo, img) {
@@ -160,19 +204,21 @@ function changeSet(id) {
     clearInterval(intervalId);
     cSetIndex = id;
     imgIndex = 0;
-    imgElement = imgSets[cSetIndex].images;
     audioElement.src = imgSets[cSetIndex].audio;
+    //imgElement = imgSets[cSetIndex].images;
     audioElement.play();
-    intervalId = setInterval(updateImg, 40);
+    //intervalId = setInterval(updateImg, 40);
+
 }
 
-function updateImg() {
+/* function updateImg() {
     if (imgIndex >= imgElement.length) {
         clearInterval(intervalId);
         return;
     }
     charPath = imgElement[imgIndex++];
-}
+    img_curr = images_1[imgIndex++];
+} */
 
 //////////////////////////////////////////////////
 const btn1 = document.getElementById('btn1');

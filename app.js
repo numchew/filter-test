@@ -75,6 +75,8 @@ function init() {
         cameraOutput.width = video.videoWidth;
         cameraOutput.height = video.videoHeight;
         requestAnimationFrame(drawVideoFrame);
+        // drawVideoFrame();
+        //requestAnimationFrame(drawVideoFrame.bind(null));
     });
 
 }
@@ -101,6 +103,8 @@ function toggleCamera() {
 }
 
 ///// draw frame /////
+let currentTimestamp
+let lastTimestamp = 0;
 function drawVideoFrame() {
     if (imgIndex < 0/* charPath == "" */) {
         drawImageSmoothly(logoImg, null);
@@ -115,21 +119,39 @@ function drawVideoFrame() {
         /* preloadImages(function () {
             
         }); */
+        const timestamp = Date.now();
+        const frameInterval = 40;
+        const elapsed = (timestamp - currentTimestamp);
 
-        img_curr = images_arr[cSetIndex][imgIndex];
 
+
+        //imgIndex = imgIndex + 1;
         if (imgIndex >= numframes - 1) {
             imgIndex = numframes - 1;
         } else {
-            imgIndex++;
+            if (elapsed >= frameInterval) {
+                imgIndex = (imgIndex + 1) % numframes;
+                currentTimestamp = timestamp;
+            }
         }
+        // console.log(elapsed, imgIndex);
+
+        img_curr = images_arr[cSetIndex][imgIndex];
+
+        /* if (imgIndex >= numframes - 1) {
+            imgIndex = numframes - 1;
+        } else {
+            imgIndex++;
+        } */
 
         drawImageSmoothly(logoImg, img_curr);
         //drawImageSmoothly(logoImg, images_1);
     }
     //requestAnimationFrame(drawVideoFrame);
 
-    setTimeout(() => drawVideoFrame(), 40);
+    //setTimeout(() => drawVideoFrame(), 40);
+
+    requestAnimationFrame(drawVideoFrame);
 }
 
 function drawImageSmoothly(logo, img) {
@@ -201,9 +223,10 @@ function fadeout() {
 //////////////////////////////////////////////////
 ///// png sequence /////
 function changeSet(id) {
-    clearInterval(intervalId);
+    //clearInterval(intervalId);
     cSetIndex = id;
     imgIndex = 0;
+    currentTimestamp = Date.now();
     audioElement.src = imgSets[cSetIndex].audio;
     //imgElement = imgSets[cSetIndex].images;
     audioElement.play();

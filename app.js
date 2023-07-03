@@ -29,10 +29,19 @@ const numframes = 125
 const frameRate = 25;
 
 
-preloadImages(null, images_arr[0], 'assets/img1/img (');
+/* preloadImages(null, images_arr[0], 'assets/img1/img (');
 preloadImages(null, images_arr[1], 'assets/img2/img (');
 preloadImages(null, images_arr[2], 'assets/img3/img (');
-preloadImages(null, images_arr[3], 'assets/img4/img (');
+preloadImages(null, images_arr[3], 'assets/img4/img ('); */
+
+preloadImages(
+    preloadImages(
+        preloadImages(preloadImages(init, images_arr[3], 'assets/img4/img ('
+        ), images_arr[2], 'assets/img3/img ('
+        ), images_arr[1], 'assets/img2/img ('
+    ), images_arr[0], 'assets/img1/img ('
+);
+
 function preloadImages(callback, arr, prefix) {
     let loadedImages = 0;
     function loadImage(index) {
@@ -278,4 +287,4 @@ btn4.addEventListener('click', () => {
     changeSet(3);
 });
 //////////////////////////////////////////////////
-window.addEventListener("load", init, true);
+//window.addEventListener("load", init, true);

@@ -1,5 +1,5 @@
 // Set constraints for the video stream
-let currentFacingMode = 'user';
+let currentFacingMode = 'environment';
 //var constraints = { video: { facingMode: currentFacingMode }, audio: false };
 var track = null;
 
@@ -9,24 +9,28 @@ const video = document.querySelector("#camera--view"),
     audioElement = document.getElementById('soundEffect');
 
 const preview = document.getElementById('previewElement');
+const loading = document.getElementById('loading');
 
 const ctx = cameraOutput.getContext('2d');
 var width, height;
 var stage, container;
 
-var cSetIndex = 0;
-var imgElement;
+var cSetIndex = -1;
 var imgIndex = -1;
-var intervalId;
-var charPath = '';
+//var intervalId;
+//var charPath = '';
+//var imgElement;
 
 var logoImg;
-var isOpening = false;
+//var isOpening = false;
 
 var images_arr = [new Array(), new Array(), new Array(), new Array()];
 var img_curr;
 const numframes = 125
 const frameRate = 25;
+
+let isLoading = true;
+let isOpenCamera = false;
 
 
 /* preloadImages(null, images_arr[0], 'assets/img1/img (');
@@ -36,7 +40,7 @@ preloadImages(null, images_arr[3], 'assets/img4/img ('); */
 
 preloadImages(
     preloadImages(
-        preloadImages(preloadImages(init, images_arr[3], 'assets/img4/img ('
+        preloadImages(preloadImages(LoadCompleted, images_arr[3], 'assets/img4/img ('
         ), images_arr[2], 'assets/img3/img ('
         ), images_arr[1], 'assets/img2/img ('
     ), images_arr[0], 'assets/img1/img ('
@@ -71,6 +75,11 @@ function handleVideo() {
     return constraints
 };
 
+function LoadCompleted() {
+    isLoading = false;
+    loading.classList.add('hidden');
+}
+
 function init() {
     width = window.innerWidth;
     height = window.innerHeight;
@@ -98,13 +107,14 @@ function toggleCamera() {
         .then(function (stream) {
             //track = stream.getTracks()[0];
             video.srcObject = stream;
-            if (isOpening) {
-                cameraOutput.classList.add('flip-animation');
+            if (isOpenCamera) {
+                //cameraOutput.classList.add('flip-animation');
+                cameraOutput.classList.add('hidden');
                 setTimeout(() => {
-                    cameraOutput.classList.remove('flip-animation');
-                }, 500);
+                    cameraOutput.classList.remove('hidden');
+                }, 1000); /* */
             }
-            isOpening = true;
+            isOpenCamera = true; /* */
         })
         .catch(function (error) {
             console.error("Oops. Something is broken.", error);
@@ -129,7 +139,7 @@ function drawVideoFrame() {
             
         }); */
         const timestamp = Date.now();
-        const frameInterval = 40;
+        const frameInterval = 25;
         const elapsed = (timestamp - currentTimestamp);
 
 
@@ -232,6 +242,9 @@ function fadeout() {
 //////////////////////////////////////////////////
 ///// png sequence /////
 function changeSet(id) {
+    if (isLoading) {
+        return;
+    }
     //clearInterval(intervalId);
     cSetIndex = id;
     imgIndex = 0;
@@ -287,4 +300,4 @@ btn4.addEventListener('click', () => {
     changeSet(3);
 });
 //////////////////////////////////////////////////
-//window.addEventListener("load", init, true);
+window.addEventListener("load", init, true);

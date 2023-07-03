@@ -1,7 +1,7 @@
 .flip-animation {
-    /*  animation-name: flip;
+    animation-name: flip;
     animation-duration: 0.5s;
-    animation-timing-function: ease-in-out; */
+    animation-timing-function: ease-in-out;
 }
 
 @keyframes flip {
@@ -33,4 +33,13 @@
     transition: all 0.25s ease-in;
     right: -100px;
     visibility: hidden;
+}
+
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
 }

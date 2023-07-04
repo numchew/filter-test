@@ -93,28 +93,31 @@ function init() {
         cameraOutput.width = video.videoWidth;
         cameraOutput.height = video.videoHeight;
         requestAnimationFrame(drawVideoFrame);
-        // drawVideoFrame();
-        //requestAnimationFrame(drawVideoFrame.bind(null));
     });
 
 }
 
 ///// switch camera /////
 function toggleCamera() {
+    isOpenCamera = false;
+    imgIndex = -1;
+
     var constraints = handleVideo();
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (stream) {
             //track = stream.getTracks()[0];
             video.srcObject = stream;
-            if (isOpenCamera) {
+            /*if (isOpenCamera) {
                 //cameraOutput.classList.add('flip-animation');
                 cameraOutput.classList.add('hidden');
                 setTimeout(() => {
                     cameraOutput.classList.remove('hidden');
-                }, 1000); /* */
-            }
-            isOpenCamera = true; /* */
+                }, 1000); 
+            } */
+
+            isOpenCamera = true;
+            changeSet(cSetIndex);
         })
         .catch(function (error) {
             console.error("Oops. Something is broken.", error);
@@ -128,23 +131,10 @@ function drawVideoFrame() {
     if (imgIndex < 0/* charPath == "" */) {
         drawImageSmoothly(logoImg, null);
     } else {
-        /* const img = new Image();
-        img.src = charPath;
-        img.onload = function () {
-            drawImageSmoothly(logoImg, img);
-        } */
-
-
-        /* preloadImages(function () {
-            
-        }); */
         const timestamp = Date.now();
         const frameInterval = 25;
         const elapsed = (timestamp - currentTimestamp);
 
-
-
-        //imgIndex = imgIndex + 1;
         if (imgIndex >= numframes - 1) {
             imgIndex = numframes - 1;
         } else {
@@ -153,23 +143,12 @@ function drawVideoFrame() {
                 currentTimestamp = timestamp;
             }
         }
-        // console.log(elapsed, imgIndex);
 
         img_curr = images_arr[cSetIndex][imgIndex];
-
-        /* if (imgIndex >= numframes - 1) {
-            imgIndex = numframes - 1;
-        } else {
-            imgIndex++;
-        } */
-
         drawImageSmoothly(logoImg, img_curr);
-        //drawImageSmoothly(logoImg, images_1);
     }
-    //requestAnimationFrame(drawVideoFrame);
 
     //setTimeout(() => drawVideoFrame(), 40);
-
     requestAnimationFrame(drawVideoFrame);
 }
 
@@ -247,13 +226,14 @@ function changeSet(id) {
     }
     //clearInterval(intervalId);
     cSetIndex = id;
-    imgIndex = 0;
-    currentTimestamp = Date.now();
-    audioElement.src = imgSets[cSetIndex].audio;
-    //imgElement = imgSets[cSetIndex].images;
-    audioElement.play();
-    //intervalId = setInterval(updateImg, 40);
-
+    if (cSetIndex > -1) {
+        imgIndex = 0;
+        currentTimestamp = Date.now();
+        audioElement.src = imgSets[cSetIndex].audio;
+        //imgElement = imgSets[cSetIndex].images;
+        audioElement.play();
+        //intervalId = setInterval(updateImg, 40);
+    }
 }
 
 /* function updateImg() {

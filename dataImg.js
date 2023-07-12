@@ -511,8 +511,8 @@ var sqImg4 = [
 ];
 
 var imgSets = [
-    { images: sqImg1, audio: 'assets/sounds/Nescafe_Interactive1.mp3' },
-    { images: sqImg2, audio: 'assets/sounds/Nescafe_Interactive2.mp3' },
-    { images: sqImg3, audio: 'assets/sounds/Nescafe_Interactive3.mp3' },
-    { images: sqImg4, audio: 'assets/sounds/Nescafe_Interactive4.mp3' }
+    { images: sqImg1, audio: 'assets/sounds/Nescafe_Interactive 1_final.mp3' },
+    { images: sqImg2, audio: 'assets/sounds/Nescafe_Interactive 2_final.mp3' },
+    { images: sqImg3, audio: 'assets/sounds/Nescafe_Interactive 3_final.mp3' },
+    { images: sqImg4, audio: 'assets/sounds/Nescafe_Interactive 4_final.mp3' }
 ];

@@ -148,7 +148,7 @@ function drawVideoFrame() {
         drawImageSmoothly(logoImg, img_curr);
     }
 
-    setTimeout(() => drawVideoFrame(), 25);
+    setTimeout(() => drawVideoFrame(), 30);
     //requestAnimationFrame(drawVideoFrame);
 }
 

@@ -69,6 +69,7 @@ function handleVideo() {
     currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
     const constraints = {
         video: {
+            //facingMode: { currentFacingMode }
             facingMode: currentFacingMode
         }, audio: false
     }
@@ -108,14 +109,6 @@ function toggleCamera() {
         .then(function (stream) {
             //track = stream.getTracks()[0];
             video.srcObject = stream;
-            /*if (isOpenCamera) {
-                //cameraOutput.classList.add('flip-animation');
-                cameraOutput.classList.add('hidden');
-                setTimeout(() => {
-                    cameraOutput.classList.remove('hidden');
-                }, 1000); 
-            } */
-
             isOpenCamera = true;
             changeSet(cSetIndex);
         })
@@ -128,7 +121,7 @@ function toggleCamera() {
 let currentTimestamp
 let lastTimestamp = 0;
 function drawVideoFrame() {
-    if (imgIndex < 0/* charPath == "" */) {
+    if (imgIndex < 0) {
         drawImageSmoothly(logoImg, null);
     } else {
         const timestamp = Date.now();
@@ -236,14 +229,6 @@ function changeSet(id) {
     }
 }
 
-/* function updateImg() {
-    if (imgIndex >= imgElement.length) {
-        clearInterval(intervalId);
-        return;
-    }
-    charPath = imgElement[imgIndex++];
-    img_curr = images_1[imgIndex++];
-} */
 
 //////////////////////////////////////////////////
 const btn1 = document.getElementById('btn1');
@@ -280,4 +265,4 @@ btn4.addEventListener('click', () => {
     changeSet(3);
 });
 //////////////////////////////////////////////////
-window.addEventListener("load", init, true);
+window.addEventListener("load", init, false);

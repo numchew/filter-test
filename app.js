@@ -65,17 +65,6 @@ function preloadImages(callback, arr, prefix) {
     }
 }
 
-function handleVideo() {
-    currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
-    const constraints = {
-        video: {
-            //facingMode: { currentFacingMode }
-            facingMode: currentFacingMode
-        }, audio: false
-    }
-    return constraints
-};
-
 function LoadCompleted() {
     isLoading = false;
     loading.classList.add('hidden');
@@ -88,22 +77,24 @@ function init() {
     logoImg = new Image();
     logoImg.src = './assets/ui/ngold_logo.png'
 
-    toggleCamera();
+    switchCamera();
+}
 
-    video.addEventListener('play', function () {
-        cameraOutput.width = video.videoWidth;
-        cameraOutput.height = video.videoHeight;
-        requestAnimationFrame(drawVideoFrame);
-    });
-
+function videoPlay() {
+    cameraOutput.width = video.videoWidth;
+    cameraOutput.height = video.videoHeight;
+    requestAnimationFrame(drawVideoFrame);
 }
 
 ///// switch camera /////
-function toggleCamera() {
+function switchCamera() {
     isOpenCamera = false;
     imgIndex = -1;
+    video.removeEventListener('play', videoPlay);
 
-    var constraints = handleVideo();
+    currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+    const constraints = { video: { facingMode: currentFacingMode }, audio: false }
+
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (stream) {
@@ -111,6 +102,7 @@ function toggleCamera() {
             video.srcObject = stream;
             isOpenCamera = true;
             changeSet(cSetIndex);
+            video.addEventListener('play', videoPlay);
         })
         .catch(function (error) {
             console.error("Oops. Something is broken.", error);
